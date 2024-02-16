@@ -1,0 +1,2 @@
+[2024-02-16 10:05:10] Storage Error: simplexml_load_file(): invalid.xml:8: parser error : Opening and ending tag mismatch: child4 line 7 and item
+[2024-02-16 10:09:28] Storage Error: simplexml_load_file(): ./xml_files_test/invalid.xml:8: parser error : Opening and ending tag mismatch: child4 line 7 and item
