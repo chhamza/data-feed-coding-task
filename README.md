@@ -15,7 +15,7 @@ Data Feed is a command-line program for processing XML files, extracting data an
 2. Navigate to the project directory:
 
    ```bash
-   cd data-feed-coding-task
+   cd data-feed-coding-task/tests
    ```
 
 3. Install dependencies:
