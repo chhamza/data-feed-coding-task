@@ -1,5 +1,7 @@
 <?php
-require_once '../DatabaseConfig.php';
+require_once __DIR__.'/../DatabaseConfig.php';
+require_once __DIR__.'/../vendor/autoload.php';
+
 use PHPUnit\Framework\TestCase;
 
 class DatabaseConfigTest extends TestCase

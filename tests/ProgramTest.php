@@ -1,7 +1,8 @@
 <?php
-require_once '../StorageInterface.php';
-require_once '../MySQLStorage.php';
-require_once '../Program.php';
+require_once __DIR__.'/../StorageInterface.php';
+require_once __DIR__.'/../MySQLStorage.php';
+require_once __DIR__.'/../Program.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +41,18 @@ class ProgramTest extends TestCase {
                     ];
                     return $data == $expectedData;
                 }),
-                'valid'
+                'valid',
+                $this->callback(function ($data) {
+                    $expectedColumns = [
+                        'attribute1',
+                        'attribute2',
+                        'child1',
+                        'child2',
+                        'child3',
+                        'child4',
+                    ];
+                    return $columns == $expectedColumns;
+                })
             );
 
         $program->run($xmlFilePath);
@@ -80,7 +92,17 @@ class ProgramTest extends TestCase {
                     ];
                     return $data == $expectedData;
                 }),
-                'nested'
+                'nested',
+                $this->callback(function ($data) {
+                    $expectedColumns = [
+                        'attribute1',
+                        'attribute2',
+                        'child1',
+                        'child2',
+                        'nestedChild1',
+                    ];
+                    return $columns == $expectedColumns;
+                })
             );
 
         $program->run($xmlFilePath);

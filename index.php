@@ -5,7 +5,7 @@ require_once 'MySQLStorage.php';
 require_once 'Program.php';
 require_once 'DatabaseConfig.php';
 require_once 'App.php';
-
+ini_set('memory_limit', '2048M');
 // Database configuration
 $host = 'localhost:3306';
 $database = 'kaufland';
@@ -13,8 +13,8 @@ $username = 'root';
 $password = '';
 $dbConfig = new DatabaseConfig($host, $database, $username, $password);
 
-// Specify XML File
-$xmlFile = "./xml_files/feed.xml";
+// Specify File
+$xmlFile = "./files/fifa.json";
 
 // Specify error log File
 $errorLogFile = "error.log";

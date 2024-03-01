@@ -19,12 +19,12 @@ class MySQLStorage implements StorageInterface {
     }
 
     // Inserts data to db
-    public function insertData(array $data, string $tableName) {
+    public function insertData(array $data, string $tableName, array $columns) {
         // Dynamically create columns if not existing
-        $this->createColumnsIfNotExists(array_keys($data), $tableName);
+        $this->createColumnsIfNotExists($columns, $tableName);
 
         // Insert data into the table
-        $this->insertDataIntoTable($tableName, $data);
+        $this->insertDataIntoTable($tableName, $data, $columns);
     }
 
     // Dynamically create columns if not existing
@@ -64,21 +64,29 @@ class MySQLStorage implements StorageInterface {
     }
 
     // Insert data into the table
-    private function insertDataIntoTable($tableName, array $data) {
-        foreach ($data as $columnName => $value) {
+    private function insertDataIntoTable($tableName, array $data, array $col) {
+        $colString = implode(', ', $col);
 
-            if (is_string($value) && strlen($value) > 255) {
-                // If the string length is greater than 255, alter the table
-                $this->alterTableColumnSize($tableName, $columnName, 'VARCHAR(1000)');
+        for ($i = 0; $i < count($data); $i++) {
+            $row = $data[$i];
+            // Ensure we're getting values from the current row
+            $strVal = array_values($row);
+            // Generate placeholders dynamically based on the row's data
+            $placeholders = implode(', ', array_fill(0, count($strVal), '?'));
+        
+            try {
+                // Prepare the SQL statement with dynamic placeholders
+                $stmt = $this->db->prepare("INSERT INTO $tableName ($colString) VALUES ($placeholders)");
+        
+                // Execute with the current row's values
+                $stmt->execute($strVal);
+            } catch (PDOException $e) {
+                // Handle the error properly
+                echo "Error: " . $e->getMessage();
+                break; // Optional: break the loop on error
             }
         }
 
-        $columns = implode(', ', array_keys($data));
-        $placeholders = implode(', ', array_fill(0, count($data), '?'));
-
-
-        $stmt = $this->db->prepare("INSERT INTO $tableName ($columns) VALUES ($placeholders)");
-        $stmt->execute(array_values($data));
     }
 
     // Alter table column size if it exceed from 255 characters

@@ -45,13 +45,13 @@ You can also specify XML files in `index.php` by giving their path. Current XML 
 Run tests using PHPUnit. Tests are inside `tests` folder. You can run tests with following command:
 
 ```bash
-vendor/bin/phpunit DatabaseConfigTest.php
+vendor/bin/phpunit tests/DatabaseConfigTest.php
 ```
 
 ```bash
-vendor/bin/phpunit ProgramTest.php
+vendor/bin/phpunit tests/ProgramTest.php
 ```
 
 ```bash
-vendor/bin/phpunit MySQLStorageTest.php
+vendor/bin/phpunit tests/MySQLStorageTest.php
 ```

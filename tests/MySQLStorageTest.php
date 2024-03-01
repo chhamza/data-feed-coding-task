@@ -1,6 +1,7 @@
 <?php
-require_once '../StorageInterface.php';
-require_once '../MySQLStorage.php';
+require_once __DIR__.'/../StorageInterface.php';
+require_once __DIR__.'/../MySQLStorage.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 
@@ -56,15 +57,22 @@ class MySQLStorageTest extends TestCase {
 
     // Insert test data in db
     public function testInsertData() {
+        $columns = [
+            'column1',
+            'column2',
+        ];
+
         $data = [
-            'column1' => 'value1',
-            'column2' => 'value2',
+            [
+                'column1' => 'value1',
+                'column2' => 'value2',
+            ]
         ];
 
         $tableName = 'test_table';
 
         try {
-            $this->storage->insertData($data, $tableName);
+            $this->storage->insertData($data, $tableName, $columns);
     
             $fetchResult = $this->fetchDataFromDatabase($tableName, $data, $this->storage->getDb());
             $this->assertNotEmpty($fetchResult, 'Data should be present in the database after insertion');    
